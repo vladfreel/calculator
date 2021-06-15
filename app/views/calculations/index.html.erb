@@ -1,0 +1,90 @@
+<br/>
+<input type='text' autocomplete="off" id='a-operator'/>
+<input type='text' autocomplete="off" id='b-operator'/>
+<br/>
+<br/>
+<button type="button" id="sum">Sum</button>
+<button type="button" id="difference">Difference</button>
+<button type="button" id="multiplication">Multiplication</button>
+<button type="button" id="division">Division</button>
+<br/>
+<br/>
+<textarea type="text-area" id="result">
+  <%=%>
+</textarea>
+
+<script>
+$('#sum').click(function () {
+  let a = $('#a-operator').val();
+  let b = $('#b-operator').val();
+  console.log(a)
+  console.log(b)
+  $.ajax({
+    type: "POST",
+    url: "/calculations/sum",
+    data: { calculation: { a: a, b: b, operation: 'sum' } },
+    success(data) {
+      let operation = "Operation: " + data.a + " + " + data.b
+      let result = "Result: " + data.result
+      let id = "ID: " + data.id
+      let count = '1'
+      $('#result').val(operation + result + id + count);
+    }
+  })
+});
+$('#difference').click(function () {
+  let a = $('#a-operator').val();
+  let b = $('#b-operator').val();
+  console.log(a)
+  console.log(b)
+  $.ajax({
+    type: "POST",
+    url: "/calculations/difference",
+    data: { calculation: { a: a, b: b, operation: 'difference' } },
+    success(data) {
+      let operation = "Operation: " + data.a + " - " + data.b 
+      let result = "Result: " + data.result
+      let id = "ID: " + data.id
+      let count = '1'
+      $('#result').val(operation + result + id + count);
+    }
+  })
+});
+$('#multiplication').click(function () {
+  let a = $('#a-operator').val();
+  let b = $('#b-operator').val();
+  console.log(a)
+  console.log(b)
+  $.ajax({
+    type: "POST",
+    url: "/calculations/multiplication",
+    data: { calculation: { a: a, b: b, operation: 'multiplication' } },
+    success(data) {
+      let operation = "Operation: " + data.a + " * " + data.b + "/n"
+      let result = "Result: " + data.result + "/n"
+      let id = "ID: " + data.id + "/n"
+      let count = '1' + "/n"
+      $('#result').val(operation + result + id + count);
+    }
+  })
+});
+$('#division').click(function () {
+  let a = $('#a-operator').val();
+  let b = $('#b-operator').val();
+  console.log(a)
+  console.log(b)
+  $.ajax({
+    type: "POST",
+    url: "/calculations/division",
+    data: { calculation: { a: a, b: b, operation: 'division' } },
+    success(data) {
+      console.log(data)
+      let operation = "Operation: " + data.a + " / " + data.b + ' \n'
+      let result = "Result: " + data.result + ' \n'
+      let id = "ID: " + data.id + ' \n'
+      let count = 'Count: 1' + ' \n'
+      $('#result').val(operation + result + id + count).html();
+    }
+  })
+});
+</script>
