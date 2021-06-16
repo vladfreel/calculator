@@ -9,4 +9,6 @@ class Calculation < ApplicationRecord
   scope :difference, -> { where(operation: 'difference') }
   scope :multiplication, -> { where(operation: 'multiplication') }
   scope :division, -> { where(operation: 'division') }
+  validates :a,  numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, presence: true
+  validates :b,  numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 100 }, presence: true
 end

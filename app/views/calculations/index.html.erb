@@ -15,31 +15,35 @@
 
 <script>
 $('#sum_nums').click(function () {
-  postAction('sum_nums');
+  postAction('sum_nums', ' + ');
 });
 $('#difference').click(function () {
-  postAction('difference');
+  postAction('difference', ' - ');
 });
 $('#multiplication').click(function () {
-  postAction('multiplication');
+  postAction('multiplication', ' * ');
 });
 $('#division').click(function () {
-  postAction('division');
+  postAction('division', ' / ');
 });
 
-function postAction(operation){
+function postAction(operation, sign){
   let a = $('#a-operator').val();
   let b = $('#b-operator').val();
+  
     $.ajax({
     type: "POST",
     url: "/calculations/" + operation,
     data: { calculation: { a: a, b: b, operation: operation } },
     success(data) {
-      let operation = "Operation: " + data.calc.a + " / " + data.calc.b + ' \n'
-      let result = "Result: " + data.calc.result + ' \n'
-      let id = "ID: " + data.calc.id + ' \n'
-      let count = 'Count: '+ data.count + ' \n'
+      let operation = "Operation: " + data.calc.a + sign + data.calc.b + '\n'
+      let result = "Result: " + data.calc.result + '\n'
+      let id = "ID: " + data.calc.id + '\n'
+      let count = 'Count: '+ data.count
       $('#result').val(operation + result + id + count).html();
+    },
+    error(data){
+      $('#result').val('error')
     }
   })
 }
