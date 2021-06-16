@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class CalculationsController < ApplicationController
-
   def index; end
 
-  def sum
-    render json: { calc: create_calc('sum'), count: Calculation.sum.count }
+  def sum_nums
+    render json: { calc: create_calc('sum_nums'), count: Calculation.sum_nums.count }
   end
 
   def difference
@@ -19,13 +18,13 @@ class CalculationsController < ApplicationController
   def division
     render json: { calc: create_calc('division'), count: Calculation.division.count }
   end
-  
+
   private
 
   def create_calc(operation)
     calculation = Calculation.new(calculation_params)
     case operation
-    when 'sum'
+    when 'sum_nums'
       calculation.result = calculation.a + calculation.b
     when 'difference'
       calculation.result = calculation.a - calculation.b
@@ -35,10 +34,10 @@ class CalculationsController < ApplicationController
       calculation.result = calculation.a / calculation.b
     end
     calculation.save!
-    return calculation
+    calculation
   end
 
-	def calculation_params
-		params.require(:calculation).permit(:a, :b, :operation)
+  def calculation_params
+    params.require(:calculation).permit(:a, :b, :operation)
   end
 end
